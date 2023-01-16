@@ -15,8 +15,8 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'docker') {
-                        sh "docker image build -t sunnybhambhani:latest ."
-                        sh "docker image tag sunnybhambhani:latest sunnybhambhani:${env.BUILD_NUMBER}"
+                        sh "docker image build -t sunnybhambhani/node:latest ."
+                        sh "docker image tag sunnybhambhani/node:latest sunnybhambhani/node:${env.BUILD_NUMBER}"
 
                         sh "docker push sunnybhambhani/node:${env.BUILD_NUMBER}"
                         sh "docker push sunnybhambhani/node:latest"
