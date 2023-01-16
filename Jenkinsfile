@@ -12,9 +12,18 @@ pipeline {
             when {
                 branch 'master'
             }
-    	    steps {
-      	    sh "docker build -t sunnybhambhani/node:${env.BUILD_NUMBER} ."
-            sh "docker push sunnybhambhani/node:${env.BUILD_NUMBER}"
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'docker') {
+                        sh "docker image build -t sunnybhambhani:latest ."
+                        sh "docker image tag sunnybhambhani:latest sunnybhambhani:${env.BUILD_NUMBER}"
+
+                        sh "docker push sunnybhambhani/node:${env.BUILD_NUMBER}"
+                        sh "docker push sunnybhambhani/node:latest'
+
+                        echo "Image built and pushed to repository"
+                    }
+                }
             }
         }
     }
