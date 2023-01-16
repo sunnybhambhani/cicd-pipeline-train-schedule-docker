@@ -8,5 +8,14 @@ pipeline {
                 archiveArtifacts artifacts: 'dist/trainSchedule.zip'
             }
         }
+        stage('Docker Build') {
+            when {
+                branch 'master'
+            }
+    	    steps {
+      	    sh 'docker build -t sunnybhambhani/node:${env.BUILD_NUMBER} .'
+            sh 'docker push sunnybhambhani/node:${env.BUILD_NUMBER} .'
+            }
+        }
     }
 }
